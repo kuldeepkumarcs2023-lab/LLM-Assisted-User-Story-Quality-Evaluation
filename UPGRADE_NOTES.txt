@@ -1,0 +1,20 @@
+PROJECT UPGRADE — DISTINCTIVE QUALITY INTELLIGENCE
+
+Project name: LLM-Assisted Quality Evaluation of User Stories
+
+Added: Story Quality DNA / Explainable Quality Intelligence
+- Requirement smell detection
+- Risk level: Low / Medium / High
+- Readiness signal and label
+- Ambiguity, scope-risk, testability and value-clarity signals
+- Strength detection
+- Privacy-friendly story fingerprint
+- Human-review guardrail
+- Intelligence included in JSON export and persisted history
+
+Also fixed:
+- Evaluation score rendering target in frontend
+- Existing database compatibility through automatic intelligence-column migration
+
+Positioning note:
+This is a distinctive academic implementation, not a claim that no similar software exists anywhere.

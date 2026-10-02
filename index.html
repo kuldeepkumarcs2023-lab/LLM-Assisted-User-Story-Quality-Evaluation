@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLM-Assisted Quality Evaluation of User Stories</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-icon">✦</div><div class="brand-name"><strong>LLM-Assisted Quality Evaluation of User Stories</strong><span>Final Year Project</span></div></div>
+  <div class="nav-label">PROJECT</div>
+  <button class="nav active" data-page="dashboard">⌂ <span>Dashboard</span></button>
+  <button class="nav" data-page="evaluate">✦ <span>Evaluate Story</span></button>
+  <button class="nav" data-page="history">◷ <span>History</span></button>
+  <button class="nav" data-page="analytics">◉ <span>Analytics</span></button>
+  <button class="nav" data-page="lab">⚗ <span>Research Lab</span></button>
+  <button class="nav" data-page="studio">⌘ <span>Requirement Studio</span></button>
+  <button class="nav" data-page="invest">◎ <span>INVEST Guide</span></button>
+  <div class="sidebar-bottom"><button id="themeBtn">☾ Dark mode</button><small>Academic Project · 2026</small></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div><small class="overline">REQUIREMENTS QUALITY LAB</small><h1 id="pageTitle">Dashboard</h1></div>
+  <div class="student"><div class="avatar">KK</div><div><b>Kuldeep Kumar</b><small>B.Tech CSE · Final Year</small></div></div>
+</header>
+
+<section id="dashboard" class="page active">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="badge">LLM + INVEST FRAMEWORK</span>
+      <div class="project-name">LLM-Assisted Quality Evaluation of User Stories</div>
+      <h2>Make every user story<br><em>clear, valuable & testable.</em></h2>
+      <p>Evaluate Agile user stories, understand quality gaps and generate actionable improvements from one professional workspace.</p>
+      <button class="btn primary" onclick="go('evaluate')">Start Evaluation <b>→</b></button>
+    </div>
+    <div class="hero-visual"><div class="ring ring1"></div><div class="ring ring2"></div><div class="core">AI</div><div class="orb o1">I</div><div class="orb o2">V</div><div class="orb o3">T</div></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><small>TOTAL EVALUATIONS</small><strong id="mCount">0</strong><span>saved reviews</span></div>
+    <div class="metric"><small>AVERAGE QUALITY</small><strong id="mAvg">0%</strong><span>overall average</span></div>
+    <div class="metric"><small>BEST SCORE</small><strong id="mBest">0%</strong><span>highest result</span></div>
+    <div class="metric"><small>HIGH QUALITY</small><strong id="mStrong">0</strong><span>score ≥ 80%</span></div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="card">
+      <div class="card-head"><div><small class="overline">QUALITY SNAPSHOT</small><h3>INVEST coverage</h3></div><span class="mini-pill">Live</span></div>
+      <div id="miniCriteria" class="mini-criteria"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><small class="overline">RECENT ACTIVITY</small><h3>Latest evaluations</h3></div><button class="text-btn" onclick="go('history')">View all →</button></div>
+      <div id="recentActivity" class="recent"></div>
+    </div>
+  </div>
+
+  <div class="section-heading"><small class="overline">WORKFLOW</small><h2>From requirement to confidence</h2></div>
+  <div class="workflow">
+    <div><span>01</span><h3>Write</h3><p>Describe the user, desired capability and expected value.</p></div>
+    <div><span>02</span><h3>Evaluate</h3><p>Analyze six INVEST dimensions with structured scoring.</p></div>
+    <div><span>03</span><h3>Improve</h3><p>Receive focused feedback and an improved story.</p></div>
+    <div><span>04</span><h3>Validate</h3><p>Review acceptance criteria before development.</p></div>
+  </div>
+</section>
+
+<section id="evaluate" class="page">
+  <div class="page-heading"><span class="badge">QUALITY ANALYSIS</span><h2>Evaluate a User Story</h2><p>Use a sample or enter your own requirement.</p></div>
+  <div class="composer card">
+    <div class="compose-head"><div><b>User Story</b><small>Natural language · maximum 5,000 characters</small></div><div class="sample-buttons"><button onclick="sample('good')">Good example</button><button onclick="sample('weak')">Weak example</button></div></div>
+    <textarea id="story" maxlength="5000" placeholder="As a customer, I want to reset my password so that I can regain access to my account."></textarea>
+    <div class="compose-footer"><span id="counter">0 / 5000</span><button class="btn primary" id="evalBtn" onclick="evaluateStory()">Analyze Story ✦</button></div>
+  </div>
+  <div id="loading" class="loading hidden"><span></span>Analyzing INVEST dimensions and preparing recommendations...</div>
+
+  <div id="result" class="hidden">
+    <div class="result-head"><div><span class="badge">ANALYSIS COMPLETE</span><h2>Quality Report</h2><small id="engine"></small></div><div class="score"><strong id="pct">0%</strong><span id="level">Quality</span></div></div>
+    <div class="quality-banner" id="qualityBanner"></div>
+    <div class="score-grid" id="scores"></div>
+    <div class="card intelligence-card">
+      <div class="card-head"><div><small class="overline">EXPLAINABLE QUALITY INTELLIGENCE</small><h3>Story Quality DNA</h3></div><span id="riskPill" class="risk-pill">Risk</span></div>
+      <div class="dna-grid">
+        <div class="dna-metric"><small>READINESS</small><strong id="readiness">0%</strong><span id="readinessLabel">—</span></div>
+        <div class="dna-metric"><small>AMBIGUITY</small><strong id="ambiguity">0%</strong><span>lower is better</span></div>
+        <div class="dna-metric"><small>SCOPE RISK</small><strong id="scopeRisk">0%</strong><span>lower is better</span></div>
+        <div class="dna-metric"><small>TESTABILITY</small><strong id="testability">0%</strong><span>signal strength</span></div>
+        <div class="dna-metric"><small>CONFIDENCE</small><strong id="confidence">0%</strong><span>evidence strength</span></div>
+      </div>
+      <div class="dna-columns">
+        <div><b>Requirement smells</b><div id="smells" class="smell-list"></div></div>
+        <div><b>Detected strengths</b><ul id="strengths" class="strength-list"></ul></div>
+      </div>
+      <div class="fingerprint">Story fingerprint: <code id="fingerprint">—</code> · Explainable, non-identifying revision marker</div>
+    </div>
+    <div class="two-col">
+      <div class="card"><div class="card-title">⚡ Improvement Feedback</div><ul id="feedback"></ul></div>
+      <div class="card"><div class="card-title">✦ Improved User Story</div><div id="improved" class="improved"></div><button class="btn secondary" onclick="copyImproved()">Copy Revision</button></div>
+    </div>
+    <div class="card acceptance"><div class="card-title">✓ Suggested Acceptance Criteria</div><div id="acceptance"></div></div>
+    <div class="actions"><button class="btn secondary" onclick="window.print()">Print / Save PDF</button><button class="btn secondary" id="jsonBtn">Download JSON</button><button class="btn primary" onclick="newStory()">Evaluate Another →</button></div>
+  </div>
+</section>
+
+<section id="history" class="page">
+  <div class="page-heading row"><div><span class="badge">AUDIT TRAIL</span><h2>Evaluation History</h2><p>Review and search your saved quality evaluations.</p></div><a class="btn secondary" href="/api/export-all">Export CSV</a></div>
+  <div class="history-tools"><input id="historySearch" placeholder="Search user stories..." oninput="filterHistory()"><select id="historyFilter" onchange="filterHistory()"><option value="all">All quality levels</option><option>Excellent</option><option>Good</option><option>Needs Improvement</option><option>Poor</option></select></div>
+  <div class="card"><div id="historyList"></div></div>
+</section>
+
+<section id="analytics" class="page">
+  <div class="page-heading"><span class="badge">INSIGHTS</span><h2>Quality Analytics</h2><p>Understand how your evaluated stories perform across INVEST.</p></div>
+  <div class="analytics-grid">
+    <div class="card chart-card"><div class="card-head"><div><small class="overline">TREND</small><h3>Quality over time</h3></div></div><div id="trendChart" class="trend-chart"></div></div>
+    <div class="card"><div class="card-head"><div><small class="overline">CRITERIA</small><h3>INVEST coverage</h3></div></div><div id="criteriaAnalytics"></div></div>
+  </div>
+  <div class="card research-note"><b>How to interpret this page</b><p>Higher criterion coverage indicates that the evaluated stories more consistently satisfy the selected INVEST dimension. The analytics are descriptive and should be reviewed alongside product context.</p></div>
+</section>
+
+<section id="lab" class="page">
+  <div class="page-heading"><span class="badge">ADVANCED RESEARCH MODE</span><h2>Research Lab</h2><p>Compare revisions and test multiple stories as a small requirements-quality dataset.</p></div>
+  <div class="two-col">
+    <div class="card"><div class="card-title">↔ Story Revision Comparator</div><p class="muted">Compare an original story with a revised version and inspect quality movement.</p><textarea id="compareA" placeholder="Original story..."></textarea><textarea id="compareB" placeholder="Revised story..."></textarea><button class="btn primary" onclick="compareStories()">Compare Revisions</button><div id="compareResult" class="lab-result"></div></div>
+    <div class="card"><div class="card-title">▦ Batch Quality Experiment</div><p class="muted">Paste one user story per line. Up to 25 stories.</p><textarea id="batchStories" placeholder="As a customer, I want to reset my password so that I can regain access.
+I want everything in one app."></textarea><button class="btn primary" onclick="batchEvaluate()">Run Batch Experiment</button><div id="batchResult" class="lab-result"></div></div>
+  </div>
+  <div class="card research-note"><b>Research-grade interpretation</b><p>The Research Lab makes the system useful for experimentation: revision deltas expose how wording changes affect quality signals, while batch evaluation creates a small descriptive dataset. These outputs are not autonomous approval decisions.</p></div>
+</section>
+
+<section id="studio" class="page">
+  <div class="page-heading"><span class="badge">REQUIREMENTS ENGINEERING</span><h2>Requirement Studio</h2><p>Turn one large or unclear user story into traceable, reviewable requirement slices.</p></div>
+  <div class="card studio-input">
+    <div class="compose-head"><div><b>Source User Story</b><small>Preserve the original intent — the studio proposes slices, it does not approve requirements.</small></div></div>
+    <textarea id="studioStory" maxlength="5000" placeholder="Paste a user story that may be too broad, ambiguous or difficult to test..."></textarea>
+    <div class="compose-footer"><span>Decomposition + traceability + review gaps</span><button class="btn primary" onclick="runStudio()">Run Requirement Studio ✦</button></div>
+  </div>
+  <div id="studioResult" class="hidden">
+    <div class="card studio-summary"><div><small class="overline">QUALITY ENGINEERING VIEW</small><h3>Requirement Structure</h3></div><div id="studioSignals" class="signal-pills"></div></div>
+    <div class="studio-grid">
+      <div class="card"><div class="card-title">◈ Candidate Story Slices</div><div id="decomposition"></div></div>
+      <div class="card"><div class="card-title">⌁ Traceability Matrix</div><div id="traceability"></div></div>
+    </div>
+    <div class="card research-note"><b>Engineering recommendation</b><p id="studioRecommendation"></p></div>
+  </div>
+</section>
+
+<section id="invest" class="page">
+  <div class="page-heading"><span class="badge">QUALITY FRAMEWORK</span><h2>INVEST Framework</h2><p>The six dimensions used by this project.</p></div>
+  <div class="invest-grid" id="investGrid"></div>
+  <div class="notice"><b>Human review matters:</b> The score is a decision-support signal. Product owners, analysts and developers should validate business context and acceptance criteria.</div>
+</section>
+</main>
+</div>
+
+<script>
+const DESC={Independent:"Can be developed with minimal dependency on another story.",Negotiable:"Focuses on the outcome rather than unnecessary implementation details.",Valuable:"Provides clear user or business value.",Estimable:"Contains enough information to estimate the work.",Small:"Focused enough for a reasonable iteration or sprint.",Testable:"Has observable conditions that verify completion."};
+const $=id=>document.getElementById(id); let currentImproved="",allHistory=[];
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(page).classList.add("active");document.querySelectorAll(".nav").forEach(x=>x.classList.toggle("active",x.dataset.page===page));$("pageTitle").textContent={dashboard:"Dashboard",evaluate:"Evaluate Story",history:"History",analytics:"Analytics",lab:"Research Lab",studio:"Requirement Studio",invest:"INVEST Guide"}[page];if(page==="dashboard")loadDashboard();if(page==="history")loadHistory();if(page==="analytics")loadAnalytics();window.scrollTo(0,0)}
+document.querySelectorAll(".nav").forEach(x=>x.onclick=()=>go(x.dataset.page));
+$("story").oninput=()=>{$("counter").textContent=$("story").value.length+" / 5000"};
+function sample(t){$("story").value=t==="good"?"As a customer, I want to reset my password so that I can regain access to my account.":"I want a complete ecommerce system with login, payment, chat, reports and everything exactly using React.";$("counter").textContent=$("story").value.length+" / 5000"}
+function levelClass(x){return x.toLowerCase().replaceAll(" ","-")}
+async function evaluateStory(){
+ const story=$("story").value.trim();if(!story)return alert("Please enter a user story.");
+ $("loading").classList.remove("hidden");$("result").classList.add("hidden");$("evalBtn").disabled=true;
+ try{const r=await fetch("/api/evaluate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({story})});const d=await r.json();if(!r.ok)throw Error(d.error);
+ currentImproved=d.improved;$("pct").textContent=d.percentage+"%";$("level").textContent=d.level;$("engine").textContent="Evaluation engine: "+d.model;
+ $("qualityBanner").innerHTML=`<b>${d.level}</b><span>${d.total}/12 points · ${d.percentage}% overall quality</span>`;
+ const q=d.intelligence||{}; const sig=q.signals||{}; $("riskPill").textContent=(q.risk_level||"Unknown")+" risk"; $("riskPill").className="risk-pill "+String(q.risk_level||"").toLowerCase(); $("readiness").textContent=(q.readiness??0)+"%"; $("readinessLabel").textContent=q.readiness_label||"—"; $("ambiguity").textContent=(sig.ambiguity??0)+"%"; $("scopeRisk").textContent=(sig.scope_risk??0)+"%"; $("testability").textContent=(sig.testability??0)+"%"; $("confidence").textContent=(q.confidence??0)+"%"; $("fingerprint").textContent=q.fingerprint||"—"; $("smells").innerHTML=(q.smells||[]).length?(q.smells||[]).map(x=>`<div class="smell ${x.severity}"><b>${esc(x.name)}</b><span>${esc(x.detail)}</span></div>`).join(""):"<div class='clean-state'>✓ No major requirement smells detected.</div>"; $("strengths").innerHTML=(q.strengths||[]).map(x=>`<li>${esc(x)}</li>`).join("")||"<li>Run a deeper review with your product team.</li>";
+ $("scores").innerHTML=Object.entries(d.scores).map(([k,v])=>`<div class="score-card"><div class="score-top"><b>${k}</b><strong>${v}/2</strong></div><div class="meter"><i style="width:${v*50}%"></i></div><small>${DESC[k]}</small></div>`).join("");
+ $("feedback").innerHTML=d.feedback.length?d.feedback.map(x=>`<li>${esc(x)}</li>`).join(""):"<li>No major issues detected in this pass.</li>";
+ $("improved").textContent=d.improved;
+ $("acceptance").innerHTML=d.acceptance.map((x,i)=>`<div class="criterion"><span>${i+1}</span><p>${esc(x)}</p></div>`).join("");
+ $("jsonBtn").onclick=()=>location.href="/api/export/"+d.id;
+ $("result").classList.remove("hidden");loadDashboard();
+ }catch(e){alert(e.message)}finally{$("loading").classList.add("hidden");$("evalBtn").disabled=false}
+}
+function newStory(){$("story").value="";$("counter").textContent="0 / 5000";$("result").classList.add("hidden");$("story").focus()}
+function copyImproved(){navigator.clipboard?.writeText(currentImproved);alert("Improved story copied.")}
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+async function loadDashboard(){
+ const s=await (await fetch("/api/stats")).json();$("mCount").textContent=s.count;$("mAvg").textContent=s.average+"%";$("mBest").textContent=s.best+"%";$("mStrong").textContent=s.strong;
+ const a=await (await fetch("/api/analytics")).json();
+ $("miniCriteria").innerHTML=Object.entries(a.criteria).map(([k,v])=>`<div class="mini-row"><b>${k}</b><div><i style="width:${v}%"></i></div><span>${v}%</span></div>`).join("");
+ const h=await (await fetch("/api/history")).json();
+ $("recentActivity").innerHTML=h.slice(0,4).map(x=>`<div class="recent-row"><div><b>${esc(x.story).slice(0,70)}${x.story.length>70?"…":""}</b><small>${x.created_at}</small></div><strong>${x.percentage}%</strong></div>`).join("")||"<div class='empty'>No evaluations yet.</div>";
+}
+async function loadHistory(){allHistory=await (await fetch("/api/history")).json();filterHistory()}
+function filterHistory(){
+ const q=($("historySearch").value||"").toLowerCase(), f=$("historyFilter").value;
+ const data=allHistory.filter(x=>(!q||x.story.toLowerCase().includes(q))&&(f==="all"||x.level===f));
+ $("historyList").innerHTML=data.length?data.map(x=>`<div class="history-row"><div><b>${esc(x.story)}</b><small>${x.created_at} · ${esc(x.model)}</small></div><div class="history-score">${x.percentage}%<small>${x.level}</small></div><a href="/api/export/${x.id}">↓</a><button onclick="removeEval(${x.id})">×</button></div>`).join(""):"<div class='empty'>No matching evaluations.</div>";
+}
+async function removeEval(id){if(confirm("Delete this evaluation?")){await fetch("/api/history/"+id,{method:"DELETE"});loadHistory();loadDashboard()}}
+async function loadAnalytics(){
+ const d=await (await fetch("/api/analytics")).json();
+ $("criteriaAnalytics").innerHTML=Object.entries(d.criteria).map(([k,v])=>`<div class="analytic-row"><div><b>${k}</b><span>${v}%</span></div><div class="wide-meter"><i style="width:${v}%"></i></div></div>`).join("");
+ const vals=d.trend.map(x=>Number(x.percentage));const max=Math.max(100,...vals,1);
+ $("trendChart").innerHTML=vals.length?vals.map((v,i)=>`<div class="bar-col"><div class="bar-value">${v}%</div><i style="height:${Math.max(8,v/max*150)}px"></i><small>${i+1}</small></div>`).join(""):"<div class='empty'>Run evaluations to see the trend.</div>";
+}
+async function runStudio(){
+ const story=$("studioStory").value.trim(); if(!story)return alert("Paste a user story first.");
+ const r=await fetch("/api/studio",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({story})});
+ const d=await r.json(); if(!r.ok)return alert(d.error);
+ $("studioSignals").innerHTML=(d.signals.length?d.signals:["No obvious structural risk"]).map(x=>`<span class="signal-pill">${esc(x)}</span>`).join("");
+ $("decomposition").innerHTML=d.decomposition.map((x,i)=>`<div class="slice"><div class="slice-index">${i+1}</div><div><b>${esc(x.title)}</b><p>${esc(x.story)}</p><small>${esc(x.reason)}</small></div></div>`).join("");
+ $("traceability").innerHTML=d.traceability.map(x=>`<div class="trace-row"><div><b>${esc(x.artifact)}</b><small>${esc(x.evidence)}</small></div><span class="trace-status ${x.status}">${esc(x.status)}</span></div>`).join("");
+ $("studioRecommendation").textContent=d.recommendation; $("studioResult").classList.remove("hidden");
+}
+
+async function compareStories(){const left=$("compareA").value.trim(),right=$("compareB").value.trim();if(!left||!right)return alert("Enter both original and revised stories.");const r=await fetch("/api/compare",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({left,right})});const d=await r.json();if(!r.ok)return alert(d.error);const sign=d.delta>0?"+":"";$("compareResult").innerHTML=`<div class="compare-summary"><b>Quality movement: ${sign}${d.delta}%</b><span>Before ${d.before.percentage}% · After ${d.after.percentage}%</span><span>Risk: ${esc(d.before.risk)} → ${esc(d.after.risk)}</span></div>`+(d.changes.length?d.changes.map(x=>`<div class="delta-row"><b>${esc(x.criterion)}</b><span>${x.before}/2 → ${x.after}/2</span></div>`).join(""):"<div class='clean-state'>No INVEST score changed.</div>`)}
+async function batchEvaluate(){const stories=$("batchStories").value.split("\n").map(x=>x.trim()).filter(Boolean);if(!stories.length)return alert("Enter at least one story.");const r=await fetch("/api/batch",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({stories})});const d=await r.json();if(!r.ok)return alert(d.error);$("batchResult").innerHTML=`<div class="compare-summary"><b>${d.count} stories analyzed</b><span>Average quality: ${d.average}%</span></div>`+d.results.map((x,i)=>`<div class="delta-row"><b>${i+1}. ${esc(x.story).slice(0,80)}${x.story.length>80?"…":""}</b><span>${x.percentage}% · ${esc(x.level)} · ${esc(x.risk)} risk</span></div>`).join("")}
+$("investGrid").innerHTML=Object.entries(DESC).map(([k,v])=>`<div class="invest-card"><div class="inv-letter">${k[0]}</div><span>0–2 SCORE</span><h3>${k}</h3><p>${v}</p></div>`).join("");
+$("themeBtn").onclick=()=>{document.body.classList.toggle("dark");const d=document.body.classList.contains("dark");$("themeBtn").textContent=d?"☀ Light mode":"☾ Dark mode";localStorage.theme=d?"dark":"light"};
+if(localStorage.theme==="dark"){document.body.classList.add("dark");$("themeBtn").textContent="☀ Light mode"}loadDashboard();
+</script>
+</body>
+</html>
